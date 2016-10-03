@@ -7,8 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PizzaNet {
     
@@ -93,12 +91,12 @@ public class PizzaNet {
         new JanPrin().setVisible(true);
         
         Ingrediente ingrediente1 = new Ingrediente();
-        Ingrediente ingrediente2 = new Ingrediente();
-        Ingrediente ingrediente3 = new Ingrediente();
-
+//        Ingrediente ingrediente2 = new Ingrediente();
+//        Ingrediente ingrediente3 = new Ingrediente();
+//
         Sabor sabor1 = new Sabor();
-        Sabor sabor2 = new Sabor();
-        Sabor sabor3 = new Sabor();
+//        Sabor sabor2 = new Sabor();
+//        Sabor sabor3 = new Sabor();
 
         Fornecedor fornecedor1 = new Fornecedor();
         Fornecedor fornecedor2 = new Fornecedor();
