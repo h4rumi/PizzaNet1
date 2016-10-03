@@ -1,5 +1,7 @@
 package Classes;
 
+
+
 import java.util.List;
 
 public class Sabor {
@@ -7,7 +9,7 @@ public class Sabor {
     int idSabor;
     String nome;
     double valor;
-    int id_ingrediente[] = new int[3];
+    int id_ingrediente[] = new int[3];  //retirar, fazer Item_Ingrediente
 
     public int getIdSabor() {
         return idSabor;
