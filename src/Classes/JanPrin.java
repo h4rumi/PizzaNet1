@@ -16,6 +16,7 @@ public class JanPrin extends javax.swing.JFrame {
      * Creates new form JanPrin
      */
     public JanPrin() {
+        
         initComponents();
     }
 

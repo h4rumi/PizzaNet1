@@ -10,6 +10,9 @@ import java.util.List;
 
 public class PizzaNet {
     
+    public static ArrayList<Sabor> sabores = new ArrayList<>();
+    public static ArrayList<Ingrediente> ingredientes = new ArrayList<>();
+    public static ArrayList<Item_Ingrediente> sab_ingr = new ArrayList<>();
     
     Connection conectarBD(){
         String url = "jdbc:postgresql://localhost:5432/PizzaNet";
@@ -74,6 +77,23 @@ public class PizzaNet {
         }
     }
     
+    void attItemIngred(Statement stmt,ArrayList<Item_Ingrediente> itmIngred){
+        try {
+            ResultSet res = stmt.executeQuery("SELECT * FROM public.\"SBR_INGR\"");
+            while(res.next()){
+                Item_Ingrediente itIng = new Item_Ingrediente();
+                itIng.setIngID(res.getInt("ingID"));
+                itIng.setSaborID(res.getInt("sbrID"));
+                itIng.setQuantidade(res.getInt("sbrIngrQtd"));
+                itmIngred.add(itIng);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Deu erro na attIngred");
+        }
+    }
+    
+
+    
     public static void main(String[] args) {
         PizzaNet pizzaASD = new PizzaNet();
         Connection con=pizzaASD.conectarBD();
@@ -82,11 +102,10 @@ public class PizzaNet {
             System.out.println("Conexão realizada com sucesso");
         
         Statement stmt = pizzaASD.criarStatement(con);
-        ArrayList<Sabor> sabores = new ArrayList<>();
-        ArrayList<Ingrediente> ingredientes = new ArrayList<>();
         
         pizzaASD.attSabores(stmt,sabores);
         pizzaASD.attIngred(stmt, ingredientes);
+        pizzaASD.attItemIngred(stmt, sab_ingr);
         
         new JanPrin().setVisible(true);
         

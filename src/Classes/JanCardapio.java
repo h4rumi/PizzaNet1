@@ -5,27 +5,36 @@
  */
 package Classes;
 
-import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
+
+
 
 /**
  *
  * @author wazzp
  */
 public class JanCardapio extends javax.swing.JFrame {
-//    void carregarSabores(){
-//        ResultSet res = pizzaASD.stmt.executeQuery("SELECT * FROM ");
-//        List<String> temp = new List<>() {};
-//        
-//    }
-    void carregarIngreds(){
-    
+    String[] carregarSabores(){
+        String[] str = new String[PizzaNet.sabores.size()];
+        for(int i=0;i<PizzaNet.sabores.size();i++){
+            str[i] = PizzaNet.sabores.get(i).getNome();
+        }
+        return str;
+    }
+    String[] carregarIngredientes(){
+        String[] str = new String[PizzaNet.ingredientes.size()];
+        for(int i=0;i<PizzaNet.ingredientes.size();i++){
+            str[i] = PizzaNet.ingredientes.get(i).getDescricao();
+        }
+        return str;
     }
     /**
      * Creates new form JanCardapio
      */
     public JanCardapio() {
+        
         initComponents();
     }
 
@@ -55,7 +64,7 @@ public class JanCardapio extends javax.swing.JFrame {
         lblSabores.setText("Sabores");
 
         listSabores.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = carregarSabores();
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -64,7 +73,7 @@ public class JanCardapio extends javax.swing.JFrame {
         lblIngredientes.setText("Ingredientes");
 
         listIngred.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = carregarIngredientes();
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -105,7 +114,7 @@ public class JanCardapio extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblIngredientes)
                     .addGroup(layout.createSequentialGroup()
@@ -126,13 +135,14 @@ public class JanCardapio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btIncluirSabor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btExcluir)
-                    .addComponent(btMostrarSel)
-                    .addComponent(btMostrarSab)
-                    .addComponent(btAlterar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btIncluirSabor)
+                        .addComponent(btMostrarSel)
+                        .addComponent(btMostrarSab)
+                        .addComponent(btAlterar)))
                 .addGap(29, 29, 29))
         );
 
@@ -141,10 +151,37 @@ public class JanCardapio extends javax.swing.JFrame {
 
     private void btMostrarSabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMostrarSabActionPerformed
         // TODO add your handling code here:
+        listIngred.setModel(new javax.swing.AbstractListModel<String>() {
+                                String[] strings = carregarIngredientes();
+                                public int getSize() { return strings.length; }
+                                public String getElementAt(int i) { return strings[i]; }
+        });
     }//GEN-LAST:event_btMostrarSabActionPerformed
 
     private void btMostrarSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMostrarSelActionPerformed
         // TODO add your handling code here:
+        int i=0,l=0, idSbrSelecionado = PizzaNet.sabores.get(listSabores.getSelectedIndex()).getIdSabor();
+        ArrayList<String> str = new ArrayList<>();
+        for(i=0;i<PizzaNet.sab_ingr.size();i++){
+            if(PizzaNet.sab_ingr.get(i).getSaborID()==idSbrSelecionado){
+                System.out.println(PizzaNet.sab_ingr.get(i).getIngID());
+                for(int j=0;j<PizzaNet.ingredientes.size();j++){
+                    if(PizzaNet.ingredientes.get(j).getIdIngrediente()==PizzaNet.sab_ingr.get(i).getIngID())
+                        str.add(PizzaNet.ingredientes.get(j).getDescricao());   
+                }
+            }
+        }
+        String[] str2 = new String[str.size()];
+        for(i=0;i<str.size();i++){
+            str2[i] = str.get(i);
+        }
+        
+        listIngred.setModel(new javax.swing.AbstractListModel<String>() {
+                                String[] strings = str2;
+                                public int getSize() { return strings.length; }
+                                public String getElementAt(int i) { return strings[i]; }
+        });
+        //Muito mais facil fazer um query     
     }//GEN-LAST:event_btMostrarSelActionPerformed
 
     /**
