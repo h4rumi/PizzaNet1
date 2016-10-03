@@ -17,7 +17,7 @@ public class PizzaNet {
     Connection conectarBD(){
         String url = "jdbc:postgresql://localhost:5432/PizzaNet";
         String user = "postgres";
-        String senha = "013niGGae0q";
+        String senha = "1234";
         Connection con = null;
         
         try {
