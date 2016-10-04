@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PizzaNet {
+    public static PizzaNet pizzaASD = new PizzaNet();
+    public static Connection con=pizzaASD.conectarBD();
+        
+    public static Statement stmt = pizzaASD.criarStatement(con);
     
     public static ArrayList<Sabor> sabores = new ArrayList<>();
     public static ArrayList<Ingrediente> ingredientes = new ArrayList<>();
@@ -18,7 +22,7 @@ public class PizzaNet {
         String url = "jdbc:postgresql://localhost:5432/PizzaNet";
         String user = "postgres";
         String senha = "1234";
-        Connection con = null;
+        Connection conn = null;
         
         try {
             Class.forName("org.postgresql.Driver");
@@ -26,13 +30,13 @@ public class PizzaNet {
         }
   
         try {
-            con = DriverManager.getConnection(url,user,senha);
+            conn = DriverManager.getConnection(url,user,senha);
         } catch (SQLException ex) {
             System.out.println("Conexão não pode ser realizada");
             
         }
         
-        return con;
+        return conn;
     }
     
     Statement criarStatement(Connection con){
@@ -95,13 +99,8 @@ public class PizzaNet {
 
     
     public static void main(String[] args) {
-        PizzaNet pizzaASD = new PizzaNet();
-        Connection con=pizzaASD.conectarBD();
-        
         if(con!=null)
             System.out.println("Conexão realizada com sucesso");
-        
-        Statement stmt = pizzaASD.criarStatement(con);
         
         pizzaASD.attSabores(stmt,sabores);
         pizzaASD.attIngred(stmt, ingredientes);
